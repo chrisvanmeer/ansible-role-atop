@@ -3,7 +3,6 @@ galaxy_info:
   author: Chris van Meer <c.v.meer@atcomputing.nl>
   company: AT Computing
   description: Configure and install atop
-  standalone: true
   namespace: chrisvanmeer
   role_name: atop
 
