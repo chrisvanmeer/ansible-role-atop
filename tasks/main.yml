@@ -49,6 +49,6 @@
         state: started
         enabled: true
       become: true
-      when: >
-        "'psacct' not in ansible_facts.packages.keys() and
-        'acct' not in ansible_facts.packages.keys()"
+      when:
+        - "'psacct' not in ansible_facts.packages.keys()"
+        - "'acct' not in ansible_facts.packages.keys()"
