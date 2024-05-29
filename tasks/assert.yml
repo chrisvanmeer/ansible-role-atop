@@ -1,0 +1,55 @@
+---
+# assert file for ansible-role-atop
+
+- name: assert | Test daemon setting
+  ansible.builtin.assert:
+    that:
+      - atop_enable_daemon is defined
+      - atop_enable_daemon is boolean
+    quiet: true
+
+- name: assert | Test rotation setting
+  ansible.builtin.assert:
+    that:
+      - atop_enable_rotation is defined
+      - atop_enable_rotation is boolean
+    quiet: true
+
+- name: assert | Test process accounting setting
+  ansible.builtin.assert:
+    that:
+      - atop_enable_pacct is defined
+      - atop_enable_pacct is boolean
+    quiet: true
+
+- name: assert | Test log options
+  ansible.builtin.assert:
+    that:
+      - atop_logopts is defined
+      - atop_logopts is string
+    quiet: true
+
+- name: assert | Test log interval
+  ansible.builtin.assert:
+    that:
+      - atop_loginterval is defined
+      - atop_loginterval is number
+      - atop_loginterval > 0
+    quiet: true
+
+- name: assert | Test log generations
+  ansible.builtin.assert:
+    that:
+      - atop_loggenerations is defined
+      - atop_loggenerations is number
+      - atop_loggenerations > 0
+    quiet: true
+
+- name: assert | Test log path
+  ansible.builtin.assert:
+    that:
+      - atop_logpath is defined
+      - atop_logpath is string
+      - atop_logpath | length > 1
+      - atop_logpath is match('^/([^/]+/)*[^/]+/?$')
+    quiet: true

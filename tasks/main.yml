@@ -1,0 +1,54 @@
+---
+# tasks file for ansible-role-atop
+
+- name: Import assert.yml
+  ansible.builtin.import_tasks:
+    file: assert.yml
+  run_once: true
+
+- name: Install atop
+  ansible.builtin.package:
+    name: "atop"
+    state: present
+  become: true
+
+- name: Ensure atop defaults file
+  ansible.builtin.template:
+    src: atop.j2
+    dest: /etc/default/atop
+    owner: root
+    group: root
+    mode: 0644
+  become: true
+  notify: Restart atop
+
+- name: Ensure atop daemon service
+  ansible.builtin.service:
+    name: atop
+    state: "{{ 'started' if atop_enable_daemon else 'stopped' }}"
+    enabled: "{{ 'true' if atop_enable_daemon else 'false' }}"
+  become: true
+
+- name: Ensure atop rotation timer
+  ansible.builtin.service:
+    name: atop-rotate.timer
+    state: started
+    enabled: true
+  become: true
+  when: atop_enable_rotation
+
+- name: Ensure atop process accounting
+  when: atop_enable_pacct
+  block:
+    - name: Gather facts about installed packages
+      ansible.builtin.package_facts:
+
+    - name: Ensure atop process accounting
+      ansible.builtin.service:
+        name: atopacct
+        state: started
+        enabled: true
+      become: true
+      when: >
+        "'psacct' not in ansible_facts.packages.keys() and
+        'acct' not in ansible_facts.packages.keys()"

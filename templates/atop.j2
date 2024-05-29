@@ -1,0 +1,9 @@
+{{ ansible_managed | comment }}
+
+# /etc/default/atop
+# see man atoprc for more possibilities to configure atop execution
+
+LOGOPTS="{{ atop_logopts }}"
+LOGINTERVAL={{ atop_loginterval }}
+LOGGENERATIONS={{ atop_loggenerations }}
+LOGPATH={{ atop_logpath }}

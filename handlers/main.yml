@@ -1,0 +1,8 @@
+---
+# handlers file for ansible-role-atop
+
+- name: Restart atop
+  ansible.builtin.service:
+    name: atop
+    state: restarted
+  become: true

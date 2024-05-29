@@ -1,0 +1,11 @@
+---
+# defaults file for ansible-role-atop
+
+atop_enable_daemon: true
+atop_enable_rotation: true
+atop_enable_pacct: true
+
+atop_logopts: ""
+atop_loginterval: 600
+atop_loggenerations: 28
+atop_logpath: /var/log/atop
